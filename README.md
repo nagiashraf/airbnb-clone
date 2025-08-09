@@ -13,3 +13,5 @@
 - Inertia.js
 - React.js
 - Tailwind CSS
+- React-Hook-Form
+- Zustand
