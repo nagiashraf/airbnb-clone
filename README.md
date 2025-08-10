@@ -2,9 +2,9 @@
 
 ## Features
 
-- Booking
+- Authentication
 
-  - Create, Read, Update, Delete bookings
+  - Registeration
 
 ## Tech Stack
 

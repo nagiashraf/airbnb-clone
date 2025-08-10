@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Some columns are nullable because a user can login with social logins and not require them.
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('image_url')->nullable();
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            // TODO: many-to-many relationship with listings table (column name 'favorite_listing_id')
+            // TODO: one-to-many relationship with reservations table
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
