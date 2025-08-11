@@ -3,13 +3,24 @@ import Avatar from "@/components/Avatar";
 import { useState } from "react";
 import MenuItem from "@/components/navbar/MenuItem";
 import useRegisterModal from "@/hooks/useRegisterModal";
+import useLoginModal from "@/hooks/useLoginModal";
+import { router, usePage } from "@inertiajs/react";
+import { PageProps } from "@/types";
 
 const UserMenu = () => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(false);
+
+  const currentUser = usePage<PageProps>().props.auth.user;
 
   const toggleOpen = () => {
     setIsOpen((value) => !value);
+  };
+
+  const handleLogout = () => {
+    router.post('/logout');
+    setIsOpen(false);
   };
 
   return (
@@ -35,8 +46,23 @@ const UserMenu = () => {
       {isOpen && (
         <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
           <div className="flex flex-col cursor-pointer">
-            <MenuItem onClick={() => { }} label="Login" />
-            <MenuItem onClick={registerModal.onOpen} label="Sign up" />
+            {currentUser ? (
+              <>
+                <MenuItem onClick={() => { }} label={currentUser.name} />
+                <MenuItem onClick={() => { }} label="My trips" />
+                <MenuItem onClick={() => { }} label="My favorites" />
+                <MenuItem onClick={() => { }} label="My reservations" />
+                <MenuItem onClick={() => { }} label="My properties" />
+                <MenuItem onClick={() => { }} label="Airbnb your home" />
+                <hr />
+                <MenuItem onClick={handleLogout} label="Logout" />
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={loginModal.onOpen} label="Login" />
+                <MenuItem onClick={registerModal.onOpen} label="Sign up" />
+              </>
+            )}
           </div>
         </div>
       )}

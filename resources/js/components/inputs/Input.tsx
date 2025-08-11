@@ -1,19 +1,18 @@
-import { FieldErrors, Path, UseFormRegister } from "react-hook-form";
+import { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form";
 import { BiDollar } from "react-icons/bi";
-import { FormValues } from "@/components/modals/RegisterModal";
 
-type InputProps = {
-  id: Path<FormValues>;
+type InputProps<TFieldValues extends FieldValues> = {
+  id: Path<TFieldValues>;
   label: string;
   type?: string;
   disabled?: boolean;
   formatPrice?: boolean;
   required?: boolean;
-  register: UseFormRegister<FormValues>;
+  register: UseFormRegister<TFieldValues>;
   errors: FieldErrors;
 }
 
-const Input = ({
+const Input = <TFieldValues extends FieldValues>({
   id,
   label,
   type = 'text',
@@ -22,7 +21,7 @@ const Input = ({
   required,
   register,
   errors
-  }: InputProps) => {
+  }: InputProps<TFieldValues>) => {
   return (
     <div className="w-full relative">
       {formatPrice && (
